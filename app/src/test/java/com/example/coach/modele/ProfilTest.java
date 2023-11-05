@@ -14,10 +14,19 @@ public class ProfilTest {
     public void getMessage() {
     }
 
+    @Test
+    public void testGetMessage(){
+        assertEquals(message, profil.getMessage());
+    }
+
+    @Test
+    public void testGetImg(){
+        assertEquals(img, profil.getImg(), (float)0.1);
+    }
     // création d’un profil : femme de 67kg, 1m65, 35 ans
     private Profil profil = new Profil(67, 165, 35, 0);
     // résultat de l’img correspondant
-    private float img = (float)32.4 ;
+    private float img = (float)32.2 ;
     // message correspondant
     private String message = "trop élevé" ;
 }

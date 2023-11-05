@@ -12,6 +12,7 @@ public class Profil {
     private Integer sexe;
     private Float img = (float) 0;
     private String message = "";
+
     public Profil(Integer poids, Integer taille, Integer age, Integer sexe) {
         this.poids = poids;
         this.taille = taille;
@@ -36,12 +37,14 @@ public class Profil {
     }
 
     public Float getImg() {
-        if(img == 0)
-            img = (float) ((1.2 * (float) poids / ((float) taille * (float) taille) / 100) + (0.23 * (float) age) - (10.83 * (float) sexe) - 5.4);
+        if(img == 0) {
+            float tailleMettre = ((float)taille)/100;
+            img = (float) (1.2 * poids / (tailleMettre * tailleMettre) + (0.23 * age) - (10.83 * sexe) - 5.4);
+        }
         return img;
     }
 
-    public String getMessage(String message) {
+    public String getMessage() {
         img = getImg();
         if(message == "") {
             if (img != 0) {
