@@ -21,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText txtPoids;
     private EditText txtTaille;
     private EditText txtAge;
+    private RadioButton rdFemme;
     private RadioButton rdHomme;
     private TextView lblIMG;
     private ImageView imgSmiley;
@@ -30,12 +31,14 @@ public class MainActivity extends AppCompatActivity {
         txtPoids = (EditText) findViewById(R.id.txtPoids);
         txtTaille = (EditText) findViewById(R.id.txtTaille);
         txtAge = (EditText) findViewById(R.id.txtAge);
+        rdFemme = (RadioButton) findViewById(R.id.rdFemme);
         rdHomme = (RadioButton) findViewById(R.id.rdHomme);
         lblIMG = (TextView) findViewById(R.id.lblIMG);
         imgSmiley = (ImageView) findViewById(R.id.imgSmiley);
         btnCalc = (Button) findViewById(R.id.btnCalc);
-        controle = Controle.getInstance();
+        controle = Controle.getInstance(this);
         ecouteCalcul();
+        recupProfil();
     }
 
     private void ecouteCalcul(){
@@ -62,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
     private void affichResult(Integer poids, Integer taille, Integer age, Integer sexe) {
-        controle.creerProfil(poids, taille, age, sexe);
+        controle.creerProfil(poids, taille, age, sexe, this);
         float img = controle.getImg();
         String message = controle.getMessage();
         switch(message){
@@ -81,7 +84,20 @@ public class MainActivity extends AppCompatActivity {
         }
         lblIMG.setText(String.format("%.01f", img)+" : IMG "+message);
     }
+    private void recupProfil(){
+        if(controle.getTaille() != null || controle.getPoid() != null || controle.getAge() != null){
+            txtPoids.setText(""+controle.getPoid().toString());
+            txtTaille.setText(""+controle.getTaille().toString());
+            txtAge.setText(""+controle.getAge().toString());
+            if(controle.getSexe() == null){
+                rdFemme.setChecked(true);
+            }else{
+                rdHomme.setChecked(true);
+            }
+            btnCalc.performClick();
+        }
 
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
